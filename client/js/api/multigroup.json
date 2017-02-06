@@ -1,0 +1,22 @@
+
+   [
+       {
+            "dark"   : [  
+                    { "value": "dark_dark1", "label": "dark_dark1" },
+                    { "value": "dark_dark2", "label": "dark_dark2" },
+                    { "value": "dark_dark3", "label": "dark_dark3" },
+                    { "value": "dark_dark4", "label": "dark_dark4" }
+                ] 
+       },
+       {
+           "light"   : [  
+                    { "value": "light_light1", "label": "light_light1" },
+                    { "value": "light_light2", "label": "light_light2" },
+                    { "value": "light_light3", "label": "light_light3" },
+                    { "value": "light_light3", "label": "light_light3" }
+                ]
+
+       }
+        
+                
+   ]
