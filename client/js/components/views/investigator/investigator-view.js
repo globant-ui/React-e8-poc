@@ -123,10 +123,10 @@ export default class InvestigatorView extends React.Component{
         <CustomDateRange/>
         <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
         
-        <div style={{width:"30%",float:"left"}}>
+        <div style={{width:"38%",float:"left"}}>
           <CustomTable tableData={this.state.tableData}/>
         </div>
-        <div style={{width:"70%",float:"right"}}>
+        <div style={{width:"62%",float:"right"}}>
           <CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
             <div className='right-container'>
               <i>Graph is WIP</i>

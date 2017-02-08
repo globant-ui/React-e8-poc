@@ -3,7 +3,7 @@ import * as styles from '!style!css!stylus!./custom-type.styl';
 
 class CustomType extends React.Component{
     render(){
-        return <span className={'icon-type'}/>;
+        return <div className={'custom-type-component'}><span className={'icon-type'}/></div>;
     }
 }
 
