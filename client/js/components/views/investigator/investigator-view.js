@@ -34,6 +34,7 @@ export default class InvestigatorView extends React.Component{
 
       "expandPanelStatus": "close",  
       "tabContainerStatus": "close",  
+      "graphContainerStatus": "close",  
       "tabComponentData":{
           "id": "behaviourTabComponent",
           "defaultActiveKey": "first",
@@ -105,10 +106,16 @@ export default class InvestigatorView extends React.Component{
     this.setState({"tabContainerStatus":p_strStatus});
   }
 
+  onToggleGraphTabComponent(p_strStatus){
+    this.setState({"graphContainerStatus":p_strStatus});
+  }
+
   render(){
     const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.expandPanelStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</h3></div></CustomPanelHeader>;
 
     const customHeaderTab = <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.tabContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</h3></div></CustomPanelHeader>;
+
+    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.graphContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</h3><span className={'icon-graph'}/></div></CustomPanelHeader>;
 
     return (
       <MainViewTpl>
@@ -116,17 +123,28 @@ export default class InvestigatorView extends React.Component{
         <CustomDateRange/>
         <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
         
-        <CustomTable tableData={this.state.tableData}/>
+        <div style={{width:"30%",float:"left"}}>
+          <CustomTable tableData={this.state.tableData}/>
+        </div>
+        <div style={{width:"70%",float:"right"}}>
+          <CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
+            <div className='right-container'>
+              <i>Graph is WIP</i>
+            </div>
+          </CustomExpandCollapse>
+          <CustomExpandCollapse id="propertyContainer"  header={customHeader}>
+            <div className='right-container'>
+              <i>No Entity Properties Found</i>
+            </div>
+          </CustomExpandCollapse>
+          <CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
+            <CustomTabComponent data={this.state.tabComponentData}/>
+          </CustomExpandCollapse>
+        </div>
 
-        <CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
-          <CustomTabComponent data={this.state.tabComponentData}/>
-        </CustomExpandCollapse>
+        
 
-        <CustomExpandCollapse id="propertyContainer"  header={customHeader}>
-          <div className='right-container'>
-            <i>No Entity Properties Found</i>
-          </div>
-        </CustomExpandCollapse>
+        
       </MainViewTpl>
     );
   }
