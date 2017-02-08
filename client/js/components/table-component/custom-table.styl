@@ -1,0 +1,28 @@
+.custom-table
+    .data-warning
+        color: red;
+
+    #customTableContainer
+        table
+            border-collapse: collapse;
+            td,th
+                border: 1px solid black;
+            th
+               text-transform: uppercase;
+               text-align: center;
+               min-width: 100px;
+            td
+                padding: 5px;
+            tr:nth-child(odd)
+                background-color: rgba(255,255,255,0.6);  
+            tr:nth-child(even)
+                background-color: rgba(255,255,255,0.3);
+            tr:first-child
+                background-color: rgba(0,76,153,0.2);                         
+        .allowClick
+            cursor: pointer
+        .blockClick
+            cursor default
+        .active-row
+            background-color: rgba(26,106,237,0.5) !important;
+            cursor: default !important;
