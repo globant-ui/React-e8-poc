@@ -25,7 +25,7 @@ export default class InvestigatorView extends React.Component{
             "columnDetail": [{"title":"Name","isRequired":true,"sortType":"content", "defaultSort":"asc"},{"title":"Location","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Age","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Sex","isRequired":true,"customComponent":Gender,"sortType":"custom_content","defaultSort":"asc","sortField":"gender"},{"title":"Birthdate","isRequired":true,"sortType":"date","defaultSort":"asc"}],
             "tableContent": [
                 {"Location":"Mumbai","Age":"28","Name":"Vikram","Sex":{"gender":"Male","isImage":true},"Birthdate":"February 24, 1988"},
-                {"Name":"Bankim","Sex":{"gender":"Male","isImage":true},"Location":"Pune","Age":"28","Birthdate":"February 24, 1988"},
+                {"Name":"Bankim S","Sex":{"gender":"Male","isImage":true},"Location":"Pune","Age":"28","Birthdate":"February 24, 1988"},
                 {"Name":"Pooja","Age":"26","Location":"Surat","Sex":{"gender":"Female","isImage":true},"Birthdate":"March 11, 1988"},
                 {"Name":"Sivaprasad Raju","Age":"30","Location":"Pune","Sex":{"gender":"Male","isImage":true},"Birthdate":"June 11, 1995"},
                 {"Name":"Alessia","Age":"25","Location":"Delhi","Sex":{"gender":"Female","isImage":true},"Birthdate":"July 11, 1995"},
