@@ -138,7 +138,6 @@ class CustomTable extends React.Component{
 
    rowClickHandler(p_objRowContent, currentRowId){
        if(!document.getElementById(currentRowId).classList.contains("active-row")){
-           console.log(p_objRowContent);
             var activeData = document.getElementsByClassName('active-row');
             if(activeData.length > 0){
                 for(let i = 0 ; i < activeData.length; i++){
@@ -149,8 +148,17 @@ class CustomTable extends React.Component{
        }
    }
 
+   resetRowSelection(){
+        var activeData = document.getElementsByClassName('active-row');
+        if(activeData.length > 0){
+            for(let i = 0 ; i < activeData.length; i++){
+                    activeData[i].classList.remove('active-row');
+                }
+        }
+   }
+
    render(){
-        console.log(this.state.tableData);
+        this.resetRowSelection();
         if(this.state.tableData){
             if(this.validateData() === false){
                 return(<h2 className='data-warning'>Invalid Table Data Received!!</h2>);
