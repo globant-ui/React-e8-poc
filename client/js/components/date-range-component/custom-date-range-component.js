@@ -44,6 +44,14 @@ class CustomDateRange extends React.Component{
         const customDefaultRange = Object.assign({},defaultRanges,newRange);
         return(
             <div className={'custom-date-range'}>
+                <div className={'label-container'}>
+                    <div className={'from-label'}>
+                        <p><b>From</b></p>
+                    </div>
+                    <div className={'to-label'}>
+                        <p><b>To</b></p>
+                    </div>
+                </div>
                 <div className={'custom-date-range-header'}>
                     {predefined['startDate'] ? <input
                     type='text'

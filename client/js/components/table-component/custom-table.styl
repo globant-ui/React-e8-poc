@@ -10,20 +10,26 @@
     #customTableContainer
         table
             border-collapse: collapse;
-            td,th
-                border: 1px solid black;
+            tr
+                border: solid 3px rgba(207,207,209,1);
+                border-right: none;
+                border-left: none;
             th
                text-transform: uppercase;
                text-align: center;
-               min-width: 100px;
+               min-width: 105px;
+               height: 50px;
             td
                 padding: 5px;
+                text-align: center;
             tr:nth-child(odd)
                 background-color: rgba(255,255,255,0.6);  
             tr:nth-child(even)
                 background-color: rgba(255,255,255,0.3);
             tr:first-child
-                background-color: rgba(0,76,153,0.2);                         
+                background-color: rgba(0,76,153,0.2);
+            tr:last-child
+                border-bottom: none;                              
         .allowClick
             cursor: pointer
         .blockClick

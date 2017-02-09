@@ -16,6 +16,7 @@ import CustomTabComponent from 'js/components/tab-component/custom-tab-component
 import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 
 import CustomDateRange from 'js/components/date-range-component/custom-date-range-component';
+import * as styles from '!style!css!stylus!./investigator-view.styl';
 
 export default class InvestigatorView extends React.Component{  
   constructor(){
@@ -119,28 +120,48 @@ export default class InvestigatorView extends React.Component{
 
     return (
       <MainViewTpl>
-        <MainViewHeader header="Investigator"/>
-        <CustomDateRange/>
-        <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
+               
+        <div id={'top-container'}>
+			<div id={'top-left-container'}>
+				<div id={'top-left-top-container'}>
+					<p>Search Component...</p>
+				</div>
+				<div id={'top-left-bottom-container'}>
+					<div id={'top-left-bottom-left-container'}>
+						<CustomDateRange/>
+					</div>
+					<div id={'top-left-bottom-right-container'}>
+						<p><b>Behaviors</b></p><p>All Behaviors</p>
+					</div>
+				</div>
+				
+			</div>
+			<div id={'top-right-container'}>
+				<p>Risk Score</p>
+				<CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
+			</div>
+		</div>
+		<div id={'bottom-container'}>
+			<div id={'bottom-left-container'}>
+				<CustomTable tableData={this.state.tableData}/>
+			</div>
+			<div id={'bottom-right-container'}>
+				<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
+					<div className='right-container'>
+					<i>Graph is WIP</i>
+					</div>
+				</CustomExpandCollapse>
+				<CustomExpandCollapse id="propertyContainer"  header={customHeader}>
+					<div className='right-container'>
+					<i>No Entity Properties Found</i>
+					</div>
+				</CustomExpandCollapse>
+				<CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
+					<CustomTabComponent data={this.state.tabComponentData}/>
+				</CustomExpandCollapse>
+			</div>
+        </div>
         
-        <div style={{width:"38%",float:"left"}}>
-          <CustomTable tableData={this.state.tableData}/>
-        </div>
-        <div style={{width:"62%",float:"right"}}>
-          <CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
-            <div className='right-container'>
-              <i>Graph is WIP</i>
-            </div>
-          </CustomExpandCollapse>
-          <CustomExpandCollapse id="propertyContainer"  header={customHeader}>
-            <div className='right-container'>
-              <i>No Entity Properties Found</i>
-            </div>
-          </CustomExpandCollapse>
-          <CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
-            <CustomTabComponent data={this.state.tabComponentData}/>
-          </CustomExpandCollapse>
-        </div>
 
         
 
