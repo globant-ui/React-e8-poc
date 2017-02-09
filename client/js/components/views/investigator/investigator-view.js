@@ -144,26 +144,26 @@ export default class InvestigatorView extends React.Component{
 			    </div>
 			</div>
 		    <div id={'bottom-container'}>
-			    <div id={'bottom-left-container'}>
+				<div id={'bottom-left-container'}>
 				    <CustomTable tableData={this.state.tableData}/>
 			    </div>
-			<div id={'bottom-right-container'}>
-				<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
-					<div className='right-container'>
-					<i>Graph is WIP</i>
-					</div>
-				</CustomExpandCollapse>
-				<CustomExpandCollapse id="propertyContainer"  header={customHeader}>
-					<div className='right-container'>
-					<i>No Entity Properties Found</i>
-					</div>
-				</CustomExpandCollapse>
-				<CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
-					<CustomTabComponent data={this.state.tabComponentData}/>
-				</CustomExpandCollapse>
-			</div>
-        </div>
-      </MainViewTpl>
+				<div id={'bottom-right-container'}>
+					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
+						<div className='right-container'>
+							<i>Graph is WIP</i>
+						</div>
+					</CustomExpandCollapse>
+					<CustomExpandCollapse id="propertyContainer"  header={customHeader}>
+						<div className='right-container'>
+							<i>No Entity Properties Found</i>
+						</div>
+					</CustomExpandCollapse>
+					<CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
+						<CustomTabComponent data={this.state.tabComponentData}/>
+					</CustomExpandCollapse>
+				</div>
+        	</div>
+		</MainViewTpl>
     );
   }
 }
