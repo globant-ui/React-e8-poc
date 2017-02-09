@@ -59,7 +59,7 @@ class CustomDateRange extends React.Component{
                     value={ predefined['startDate'] && predefined['startDate'].format(format).toString() }
                     />: ''}
                     
-                    <span onClick={this.onDateIconClick} className={'date-icon'}/>
+                    <span onClick={this.onDateIconClick} className={'fa fa-calendar fa-2x date-icon'}/>
                     {predefined['endDate'] ? <input
                     type='text'
                     readOnly
