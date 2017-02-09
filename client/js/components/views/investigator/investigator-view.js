@@ -123,32 +123,30 @@ export default class InvestigatorView extends React.Component{
     const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.graphContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</h3><span className={'icon-graph'}/></div></CustomPanelHeader>;
 
     return (
-      <MainViewTpl>
-               
-        <div id={'top-container'}>
-			<div id={'top-left-container'}>
-				<div id={'top-left-top-container'}>
-					<p>Search Component...</p>
+		<MainViewTpl>
+			<div id={'top-container'}>
+				<div id={'top-left-container'}>
+					<div id={'top-left-top-container'}>
+					    <p>Search Component...</p>
+				    </div>
+				    <div id={'top-left-bottom-container'}>
+					    <div id={'top-left-bottom-left-container'}>
+						    <CustomDateRange/>
+					    </div>
+					    <div id={'top-left-bottom-right-container'}>
+						    <p><b>Behaviors</b></p><p>All Behaviors</p>
+					    </div>
+				    </div>
 				</div>
-				<div id={'top-left-bottom-container'}>
-					<div id={'top-left-bottom-left-container'}>
-						<CustomDateRange/>
-					</div>
-					<div id={'top-left-bottom-right-container'}>
-						<p><b>Behaviors</b></p><p>All Behaviors</p>
-					</div>
-				</div>
-				
+			    <div id={'top-right-container'}>
+				    <p>Risk Score</p>
+				    <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
+			    </div>
 			</div>
-			<div id={'top-right-container'}>
-				<p>Risk Score</p>
-				<CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
-			</div>
-		</div>
-		<div id={'bottom-container'}>
-			<div id={'bottom-left-container'}>
-				<CustomTable tableData={this.state.tableData}/>
-			</div>
+		    <div id={'bottom-container'}>
+			    <div id={'bottom-left-container'}>
+				    <CustomTable tableData={this.state.tableData}/>
+			    </div>
 			<div id={'bottom-right-container'}>
 				<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
 					<div className='right-container'>
@@ -165,11 +163,6 @@ export default class InvestigatorView extends React.Component{
 				</CustomExpandCollapse>
 			</div>
         </div>
-        
-
-        
-
-        
       </MainViewTpl>
     );
   }
