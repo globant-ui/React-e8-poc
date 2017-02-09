@@ -28,7 +28,11 @@ export default class InvestigatorView extends React.Component{
             "tableContent": [
                 {"Entities":{"entityType":"system","entityTitle":"system@authority"},"Behavior":"System Activity","Type":{},"Score":"10"},
                 {"Entities":{"entityType":"system","entityTitle":"system1@authority"},"Behavior":"System Activity1","Type":{},"Score":"7"},
-                {"Entities":{"entityType":"user","entityTitle":"user@authority"},"Behavior":"User Activity","Type":{},"Score":"6"},
+                {"Entities":{"entityType":"user","entityTitle":"user@authority"},"Behavior":"User Activity","Type":{},"Score":"9"},
+                {"Entities":{"entityType":"system","entityTitle":"mysystem@authority"},"Behavior":"my system Activity","Type":{},"Score":"8.4"},
+                {"Entities":{"entityType":"user","entityTitle":"bankim@authority"},"Behavior":"bankim Activity","Type":{},"Score":"6"},
+                {"Entities":{"entityType":"system","entityTitle":"autosystem@authority"},"Behavior":"auto system Activity","Type":{},"Score":"7.8"},
+                {"Entities":{"entityType":"user","entityTitle":"globant@authority"},"Behavior":"globant Activity","Type":{},"Score":"6.5"},
                 {"Entities":{"entityType":"user","entityTitle":"user2@authority"},"Behavior":"User2 Activity","Type":{},"Score":"7.2"}
             ]
         },
