@@ -3,7 +3,7 @@ import * as styles from '!style!css!stylus!./custom-entity.styl';
 
 class CustomEntity extends React.Component{
     render(){
-        const imgBlock = (this.props.data.entityType).toLowerCase() === "system" ? <span className='icon-system'/> : <span className='icon-user'/>;
+        const imgBlock = (this.props.data.entityType).toLowerCase() === "system" ? <span className='icon-entity fa fa-desktop fa-2x'/> : <span className='icon-entity fa fa-user fa-2x'/>;
         return <div style={{display:'table'}}>{imgBlock}<span className={'block-txt'}>{this.props.data.entityTitle}</span></div>;
     }
 }

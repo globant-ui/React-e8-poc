@@ -1,5 +1,6 @@
 import React from 'react';
 import './main.styl'
+import * as styles from '!style!css!stylus!../../../css/font-awesome.css';
 import {App, TopNav, Brand, NavItems} from 'js/components/navigation/navigation';
 import {GlobalActions} from 'js/components/navigation/global-actions';
 import {renderRoutes} from 'js/components/main-routes/main-routes';

@@ -120,7 +120,7 @@ export default class InvestigatorView extends React.Component{
 
     const customHeaderTab = <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.tabContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</h3></div></CustomPanelHeader>;
 
-    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.graphContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</h3><span className={'icon-graph'}/></div></CustomPanelHeader>;
+    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.graphContainerStatus}/><h3 style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</h3><span style={{paddingLeft:"10px"}} className='fa fa-sort-amount-asc fa-lg'/></div></CustomPanelHeader>;
 
     return (
 		<MainViewTpl>
@@ -139,7 +139,7 @@ export default class InvestigatorView extends React.Component{
 				    </div>
 				</div>
 			    <div id={'top-right-container'}>
-				    <p>Risk Score</p>
+				    <p><b>Risk Score</b></p>
 				    <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
 			    </div>
 			</div>
