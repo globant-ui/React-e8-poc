@@ -25,7 +25,7 @@ export default class MainPage extends React.Component {
                 </NavItems>
                 <GlobalActions></GlobalActions>
             </TopNav>
-			<TopActionPanel onSliderChange = {(currVal) => this.handleSliderChange(currVal)}/>
+            <TopActionPanel onSliderChange = {(currVal) => this.handleSliderChange(currVal)}/>
             {this.props.children}
         </App>
     );
