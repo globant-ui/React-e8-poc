@@ -3,19 +3,13 @@ import {MainViewTpl, MainViewHeader} from 'js/components/base-views/main-view';
 import CustomTable from 'js/components/table-component/custom-table';
 import CustomType from 'js/components/table-component/custom-type';
 import CustomEntity from 'js/components/table-component/custom-entity';
-
-import CustomSlider from 'js/components/range-slider-component/custom-range-slider';
-
-import CustomAccordion from 'js/components/accordion-component/custom-accordion';
-
 import CustomExpandCollapse from 'js/components/expand-collapse-component/custom-expand-collapse';
 import CustomPanelHeader from 'js/components/expand-collapse-component/custom-panel-header';
 import Arrow from 'js/components/expand-collapse-component/toggle-arrow-component';
-
 import CustomTabComponent from 'js/components/tab-component/custom-tab-component';
 import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 
-import CustomDateRange from 'js/components/date-range-component/custom-date-range-component';
+
 import * as styles from '!style!css!stylus!./investigator-view.styl';
 
 export default class InvestigatorView extends React.Component{  
@@ -26,20 +20,21 @@ export default class InvestigatorView extends React.Component{
             "title":"Entity Results",
             "columnDetail": [{"title":"Entities","isRequired":true,"customComponent":CustomEntity,"sortType":"custom_content","defaultSort":"asc","sortField":"entityTitle"},{"title":"Behavior","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Type","isRequired":true,"customComponent":CustomType},{"title":"Score","isRequired":true,"sortType":"date","defaultSort":"asc"}],
             "tableContent": [
-                {"Entities":{"entityType":"system","entityTitle":"system@authority"},"Behavior":"System Activity","Type":{},"Score":"10"},
-                {"Entities":{"entityType":"system","entityTitle":"system1@authority"},"Behavior":"System Activity1","Type":{},"Score":"7"},
-                {"Entities":{"entityType":"user","entityTitle":"user@authority"},"Behavior":"User Activity","Type":{},"Score":"9"},
-                {"Entities":{"entityType":"system","entityTitle":"mysystem@authority"},"Behavior":"my system Activity","Type":{},"Score":"8.4"},
-                {"Entities":{"entityType":"user","entityTitle":"bankim@authority"},"Behavior":"bankim Activity","Type":{},"Score":"6"},
-                {"Entities":{"entityType":"system","entityTitle":"autosystem@authority"},"Behavior":"auto system Activity","Type":{},"Score":"7.8"},
-                {"Entities":{"entityType":"user","entityTitle":"globant@authority"},"Behavior":"globant Activity","Type":{},"Score":"6.5"},
-                {"Entities":{"entityType":"user","entityTitle":"user2@authority"},"Behavior":"User2 Activity","Type":{},"Score":"7.2"}
+                {"Entities":{"entityType":"system","entityTitle":"system@authority","displayMode":"2x"},"Behavior":"System Activity","Type":{},"Score":"10"},
+                {"Entities":{"entityType":"system","entityTitle":"system1@authority","displayMode":"2x"},"Behavior":"System Activity1","Type":{},"Score":"7"},
+                {"Entities":{"entityType":"user","entityTitle":"user@authority","displayMode":"2x"},"Behavior":"User Activity","Type":{},"Score":"9"},
+                {"Entities":{"entityType":"system","entityTitle":"mysystem@authority","displayMode":"2x"},"Behavior":"my system Activity","Type":{},"Score":"8.4"},
+                {"Entities":{"entityType":"user","entityTitle":"bankim@authority","displayMode":"2x"},"Behavior":"bankim Activity","Type":{},"Score":"6"},
+                {"Entities":{"entityType":"system","entityTitle":"autosystem@authority","displayMode":"2x"},"Behavior":"auto system Activity","Type":{},"Score":"7.8"},
+                {"Entities":{"entityType":"user","entityTitle":"globant@authority","displayMode":"2x"},"Behavior":"globant Activity","Type":{},"Score":"6.5"},
+                {"Entities":{"entityType":"user","entityTitle":"user2@authority","displayMode":"2x"},"Behavior":"User2 Activity","Type":{},"Score":"7.2"}
             ]
         },
 
       "expandPanelStatus": "close",  
       "tabContainerStatus": "close",  
-      "graphContainerStatus": "close",  
+      "graphContainerStatus": "close",
+	  "currentSelectionEntity": {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},  
       "tabComponentData":{
           "id": "behaviourTabComponent",
           "defaultActiveKey": "first",
@@ -66,41 +61,8 @@ export default class InvestigatorView extends React.Component{
              "tabContent": "TabContent 2" 
             }
           ]
-      },
-      "sliderData" : {
-            "minVal" : 0,
-            "maxVal" : 10,
-            "stepVal" : 1,
-            "currentVal" : [0,1],
-            "marks": {
-              0: <strong>0</strong>,
-              1: <strong>1</strong>,
-              2: <strong>2</strong>,
-              3: <strong>3</strong>,
-              4: <strong>4</strong>,
-              5: <strong>5</strong>,
-              6: <strong>6</strong>,
-              7: <strong>7</strong>,
-              8: <strong>8</strong>,
-              9: <strong>9</strong>,
-              10: <strong>10</strong>,
-            }
-        }
-        
-      
+      }
     }
-
-    this.handleSliderChange = this.handleSliderChange.bind(this);
-  }
-
-
-
-  handleSliderChange(p_currentValue){
-    console.log(p_currentValue);
-    const objSlider = Object.assign({},this.state.sliderData,{currentVal:p_currentValue})
-    this.setState({
-      "sliderData": objSlider
-    });
   }
 
   onToggleComponent(p_strStatus){
@@ -115,6 +77,14 @@ export default class InvestigatorView extends React.Component{
     this.setState({"graphContainerStatus":p_strStatus});
   }
 
+  onTableDataSelectionChange(p_rowContent){
+		console.log(p_rowContent);
+		var currentObj = Object.assign({},p_rowContent.Entities,{"displayMode":"4x"})
+		this.setState({
+			"currentSelectionEntity": currentObj
+		})
+  }
+
   render(){
     const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.expandPanelStatus}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
 
@@ -124,35 +94,17 @@ export default class InvestigatorView extends React.Component{
 
     return (
 		<MainViewTpl>
-			<div id={'top-container'}>
-				<div id={'top-left-container'}>
-					<div id={'top-left-top-container'}>
-					    <p>Search Component...</p>
-				    </div>
-				    <div id={'top-left-bottom-container'}>
-					    <div id={'top-left-bottom-left-container'}>
-						    <CustomDateRange/>
-					    </div>
-					    <div id={'top-left-bottom-right-container'}>
-						    <p><b>Behaviors</b></p><p>All Behaviors</p>
-					    </div>
-				    </div>
-				</div>
-			    <div id={'top-right-container'}>
-				    <p><b>Risk Score</b></p>
-				    <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
-			    </div>
-			</div>
-		    <div id={'bottom-container'}>
+			<div id={'bottom-container'}>
 				<div id={'bottom-left-container'}>
-				    <CustomTable tableData={this.state.tableData}/>
-			    </div>
+					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} tableData={this.state.tableData}/>
+				</div>
 				<div id={'bottom-right-container'}>
 					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
 						<div className='right-container'>
 							<i>Graph is WIP</i>
 						</div>
 					</CustomExpandCollapse>
+					<CustomEntity data={this.state.currentSelectionEntity}/>
 					<CustomExpandCollapse id="propertyContainer"  header={customHeader}>
 						<div className='right-container'>
 							<i>No Entity Properties Found</i>
@@ -162,7 +114,7 @@ export default class InvestigatorView extends React.Component{
 						<CustomTabComponent data={this.state.tabComponentData}/>
 					</CustomExpandCollapse>
 				</div>
-        	</div>
+			</div>
 		</MainViewTpl>
     );
   }

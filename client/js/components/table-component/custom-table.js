@@ -8,7 +8,9 @@ class CustomTable extends React.Component{
         super();
         this.validateData = this.validateData.bind(this);
         this.getDefaultSort = this.getDefaultSort.bind(this);
-        this.state = {}
+        this.state = {
+            "currentRowID": "row_0"
+        }
     }
 
     validateData(){
@@ -23,6 +25,7 @@ class CustomTable extends React.Component{
         }
         return true;
     }
+
     sortTableListByDate(p_columnValue,p_sortType,p_isCustomField){ 
 			const arrUpdatedList = this.state.tableData.tableContent.sort(function(a, b){
                 var dateA,dateB;
@@ -47,6 +50,7 @@ class CustomTable extends React.Component{
                 tableData : objTableData
             });
 		}
+
     sortTableByName(p_columnValue,p_sortType,p_isCustomField){ 
 			const arrUpdatedList = this.state.tableData.tableContent.sort(function(a, b){
                 var nameA,nameB;
@@ -96,6 +100,7 @@ class CustomTable extends React.Component{
        }
      }
 
+
      getCustomSortField(p_columnId){
          for(let i = 0 ; i < this.state.tableData.columnDetail.length; i++) {
              if(this.state.tableData.columnDetail[i].title === p_columnId){
@@ -132,39 +137,30 @@ class CustomTable extends React.Component{
 
    componentDidMount() {
         this.setState({
-            tableData : this.props.tableData
+            tableData : this.props.tableData,
+            "currentRowID": "row_"+this.props.tableData.tableContent[0].Entities.entityType+"_"+this.props.tableData.tableContent[0].Entities.entityTitle
         });
    }
 
    rowClickHandler(p_objRowContent, currentRowId){
        if(!document.getElementById(currentRowId).classList.contains("active-row")){
-            var activeData = document.getElementsByClassName('active-row');
-            if(activeData.length > 0){
-                for(let i = 0 ; i < activeData.length; i++){
-                        activeData[i].classList.remove('active-row');
-                    }
+            this.setState({
+                "currentRowID": currentRowId
+            })
+            if(this.props.tableDataSelectHandler){
+                this.props.tableDataSelectHandler(p_objRowContent);
             }
-            document.getElementById(currentRowId).classList.add('active-row');
        }
    }
 
-   resetRowSelection(){
-        var activeData = document.getElementsByClassName('active-row');
-        if(activeData.length > 0){
-            for(let i = 0 ; i < activeData.length; i++){
-                    activeData[i].classList.remove('active-row');
-                }
-        }
-   }
-
    render(){
-        this.resetRowSelection();
+
         if(this.state.tableData){
             if(this.validateData() === false){
                 return(<h2 className='data-warning'>Invalid Table Data Received!!</h2>);
             }
             else {
-                const mappedRows = this.state.tableData.tableContent.map((rowData,i)=> <CustomRow onClick={(data,currentRowId) => this.rowClickHandler(data,currentRowId)} id={"row_"+i} key={i} rowContent={rowData} columnDetail={this.state.tableData.columnDetail}/>);
+                const mappedRows = this.state.tableData.tableContent.map((rowData,i)=> <CustomRow currentRow={this.state.currentRowID} onClick={(data,currentRowId) => this.rowClickHandler(data,currentRowId)} id={"row_"+rowData.Entities.entityType+"_"+rowData.Entities.entityTitle} key={i} rowContent={rowData} columnDetail={this.state.tableData.columnDetail}/>);
                 return(
                     <div className='custom-table'>
                         <div id='customTableHeader'>

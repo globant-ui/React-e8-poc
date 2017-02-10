@@ -31,7 +31,7 @@ class CustomRow extends React.Component{
 
     render(){
         return(
-            <tr id={this.props.id} style={{cursor:'pointer'}} onClick={this.onRowClickHandler}>{this.createRowItem()}</tr>
+            <tr className={this.props.currentRow === this.props.id ? 'active-row' : '' } id={this.props.id} style={{cursor:'pointer'}} onClick={this.onRowClickHandler}>{this.createRowItem()}</tr>
         );
     }
 }
