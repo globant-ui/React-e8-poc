@@ -8,13 +8,13 @@ import CustomPanelHeader from 'js/components/expand-collapse-component/custom-pa
 import Arrow from 'js/components/expand-collapse-component/toggle-arrow-component';
 import CustomTabComponent from 'js/components/tab-component/custom-tab-component';
 import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
-
+import TopActionPanel from 'js/components/top-action-panel-component/topActionPanel'
 
 import * as styles from '!style!css!stylus!./investigator-view.styl';
 
-export default class InvestigatorView extends React.Component{  
+export default class InvestigatorView extends TopActionPanel{  
   constructor(){
-    super();
+    super(...arguments);
     this.state = {
       "tableData" : {
             "title":"Entity Results",
@@ -30,7 +30,25 @@ export default class InvestigatorView extends React.Component{
                 {"Entities":{"entityType":"user","entityTitle":"user2@authority","displayMode":"2x"},"Behavior":"User2 Activity","Type":{},"Score":"7.2"}
             ]
         },
-
+        "sliderData" : {
+                "minVal" : 0,
+                "maxVal" : 10,
+                "stepVal" : 1,
+                "currentVal" : [0,1],
+                "marks": {
+                0: <strong>0</strong>,
+                1: <strong>1</strong>,
+                2: <strong>2</strong>,
+                3: <strong>3</strong>,
+                4: <strong>4</strong>,
+                5: <strong>5</strong>,
+                6: <strong>6</strong>,
+                7: <strong>7</strong>,
+                8: <strong>8</strong>,
+                9: <strong>9</strong>,
+                10: <strong>10</strong>,
+                }
+            },
       "expandPanelStatus": "close",  
       "tabContainerStatus": "close",  
       "graphContainerStatus": "close",
@@ -65,6 +83,14 @@ export default class InvestigatorView extends React.Component{
     }
   }
 
+  handleSliderChange(p_currentValue){
+        const objSlider = Object.assign({},this.state.sliderData,{currentVal:p_currentValue})
+        this.setState({
+            "sliderData": objSlider
+        });
+        console.log("@@@@@@@@@Slider Value:"+p_currentValue);
+    }
+
   onToggleComponent(p_strStatus){
     this.setState({"expandPanelStatus":p_strStatus});
   }
@@ -94,6 +120,7 @@ export default class InvestigatorView extends React.Component{
 
     return (
 		<MainViewTpl>
+      {super.renderHeader()}
 			<div id={'bottom-container'}>
 				<div id={'bottom-left-container'}>
 					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} tableData={this.state.tableData}/>
