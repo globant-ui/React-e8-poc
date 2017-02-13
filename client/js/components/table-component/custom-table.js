@@ -44,11 +44,11 @@ class CustomTable extends React.Component{
                     return dateB-dateA //sort by date ascending
                 }
 			});
-            var objTableData = Object.assign({},this.state.tableData);
+            /*var objTableData = Object.assign({},this.state.tableData);
             objTableData.tableContent = arrUpdatedList;
             this.setState({
                 tableData : objTableData
-            });
+            });*/
 		}
 
     sortTableByName(p_columnValue,p_sortType,p_isCustomField){ 
