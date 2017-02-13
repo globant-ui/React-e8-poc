@@ -42,15 +42,19 @@ class InvestigatorView extends TopActionPanel{
   }
 
   handleSliderChange(p_currentValue){
-        const objSlider = Object.assign({},this.state.sliderData,{currentVal:p_currentValue})
-        this.setState({
-            "sliderData": objSlider
-        });
-        console.log("@@@@@@@@@Slider Value:"+p_currentValue);
-    }
-    onSelectChange(param1,param2){
-        fetchEntityDataWithParams(param1);
-    }
+      const objSlider = Object.assign({},this.state.sliderData,{currentVal:p_currentValue})
+      this.setState({
+          "sliderData": objSlider
+      });
+      console.log("@@@@@@@@@Slider Value:"+p_currentValue);
+      store.dispatch({type:"UPDATE_FILTER_SCORE",payload:p_currentValue});
+      //fetchEntityDataWithParams();
+  }
+  onSelectChange(param1,param2){
+      store.dispatch({type:"UPDATE_FILTER_LIST",payload:param1});
+      debugger;
+      //fetchEntityDataWithParams();
+  }
 
   onToggleComponent(p_strStatus){
     store.dispatch({type:"UPDATE_PROPERTY_PANEL_STATE"});

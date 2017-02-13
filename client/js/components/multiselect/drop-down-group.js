@@ -58,7 +58,7 @@ render() {
                         loadOptions={getOptions}
                         onChange={logChange}
                         multi={true}
-                        delimiter="'"
+                        delimiter=","
                         joinValues={true}
                         deleteRemoves={true}
                         simpleValue={true}

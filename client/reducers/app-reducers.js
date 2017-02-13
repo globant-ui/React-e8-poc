@@ -6,5 +6,5 @@ import {panelState} from './panel-state';
 export const AppReducers = combineReducers({
    entity: entityList,
    entityDetail: entityDetail,
-   panelState: panelState
+   panelState: panelState,
 })
