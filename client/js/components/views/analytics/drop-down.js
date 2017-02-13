@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Select from 'react-select';
 
-import users from '../../../api/users';
 
 export class DropdownView extends React.Component{
    constructor(props) {
@@ -12,29 +11,28 @@ export class DropdownView extends React.Component{
     };
 }
    render() {
-     var logChange = (val, selected) => {
-        this.setState({
-          searchQuery: val,
-          multiSelectVal: true
-       });
-     }
+    
 
      var changeDropdownType = (ele) => {
          if(ele.currentTarget.value == "single"){
               this.setState({
                 multiSelectVal: false,
-                /**searchQuery: ''*/
+                searchQuery: ''
 
               });
          } else if(ele.currentTarget.value == "multi"){
              this.setState({
                 multiSelectVal: true,
-                 /**searchQuery: ''*/
+                searchQuery: ''
               });
          }
      }
 
      var getOptions = (input) => {
+
+          if (!input) {
+       	return Promise.resolve({ options: [] });
+     }
       
           return fetch(`https://api.github.com/search/users?q=${input}`)
           .then((response) => {
@@ -51,17 +49,13 @@ export class DropdownView extends React.Component{
           });
       }
 
-    var getDropdownValues = (input, callback) => {
-         setTimeout(function() {
-             callback(null, {
-                    options: users.getUsers(),
-                    complete: true
-               });
-          }, 500);
-           this.setState({
-                searchQuery: ''
-              });
-    };
+       var logChange = (value) => {
+        this.setState({
+          searchQuery: value,
+       });
+     }
+
+   
      return ( 
              <div style={{ width: 300}}>
              <span> Choose type of dropdown .. </span>
@@ -69,10 +63,10 @@ export class DropdownView extends React.Component{
              <input type="radio" name="myRadio"  onClick={changeDropdownType} value="single" defaultChecked/> Single <br />
              <input type="radio" name="myRadio" onClick={changeDropdownType} value="multi" /> Multi <br />
              </div>
-              <Select.Async
-                 name="form-field-name"
-                 value={this.state.searchQuery || ''}
-                 loadOptions={getOptions}
+              <Select.Async 
+                  name="form-field-name"
+                  value={this.state.searchQuery}
+                  loadOptions={getOptions}
                   onChange={logChange}
                   multi={this.state.multiSelectVal}
                   delimiter="'"

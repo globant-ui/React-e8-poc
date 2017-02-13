@@ -1,20 +1,21 @@
 import React from 'react';
 import CustomDateRange from 'js/components/date-range-component/custom-date-range-component';
 import CustomSlider from 'js/components/range-slider-component/custom-range-slider';
+import DropdownGroupView from 'js/components/multiselect/drop-down-group';
 import * as styles from '!style!css!stylus!./topActionPanel.styl';
 
 class TopActionPanel extends React.Component{
     constructor(){
         super();
     }
-
+    
     renderHeader(){
         
         return(
                 <div id={'top-container'}>
                     <div id={'top-left-container'}>
                         <div id={'top-left-top-container'}>
-                            <p>Search Component...</p>
+                            <DropdownGroupView onChange={(parm1,param2)=>this.onSelectChange(parm1,param2)}/>
                         </div>
                         <div id={'top-left-bottom-container'}>
                             <div id={'top-left-bottom-left-container'}>
