@@ -2,9 +2,6 @@ import React from 'react';
 import Select from 'react-select-plus';
 
 
-/**import multigroup from '../../../api/multigroup';**/
-
-
  class DropdownGroupView extends React.Component{
      constructor(props) {
     super(props);
@@ -13,8 +10,6 @@ import Select from 'react-select-plus';
        multiSelectVal: false
     };
 }
-
-
 
 render() {
 
@@ -56,26 +51,20 @@ render() {
 
 
         return (
-             <div>
-                <div style={{width:"95%",display:"inline-block"}}>
-                <Select.Async
-                    name="form-field-name"
-                    value={this.state.value}
-                    loadOptions={getOptions}
-                     onChange={logChange}
-                     multi={true}
-                     delimiter="'"
-                     joinValues={true}
-                     deleteRemoves={true}
-                     simpleValue={true}
-                     backspaceRemoves= {true}>
-                 </Select.Async>  
-                 </div>  
-                 <span>
-                 <i className="fa fa-search" aria-hidden="true"></i>
-                 </span>
-             </div>
-                 
+                <div>
+                    <Select.Async
+                        name="form-field-name"
+                        value={this.state.value}
+                        loadOptions={getOptions}
+                        onChange={logChange}
+                        multi={true}
+                        delimiter="'"
+                        joinValues={true}
+                        deleteRemoves={true}
+                        simpleValue={true}
+                        backspaceRemoves= {true}>
+                    </Select.Async>  
+                </div>
               );
   
    }
