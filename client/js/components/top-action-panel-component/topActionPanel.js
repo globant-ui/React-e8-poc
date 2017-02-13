@@ -2,6 +2,7 @@ import React from 'react';
 import CustomDateRange from 'js/components/date-range-component/custom-date-range-component';
 import CustomSlider from 'js/components/range-slider-component/custom-range-slider';
 import DropdownGroupView from 'js/components/multiselect/drop-down-group';
+import LocalDropdownView from 'js/components/multiselect/local-dropdown';
 import * as styles from '!style!css!stylus!./topActionPanel.styl';
 
 class TopActionPanel extends React.Component{
@@ -22,7 +23,8 @@ class TopActionPanel extends React.Component{
                                 <CustomDateRange onChange={(param)=>this.handleDateRangeChange(param)}/>
                             </div>
                             <div id={'top-left-bottom-right-container'}>
-                                <p><b>Behaviors</b></p><p>All Behaviors</p>
+                                <p><b>Behaviors</b></p>
+                                <LocalDropdownView onChange={(param1, param2) => this.onDropdownValueChange(param1,param2)} />
                             </div>
                         </div>
                     </div>

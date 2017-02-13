@@ -59,6 +59,10 @@ class InvestigatorView extends TopActionPanel{
     console.log(param1);
       //fetchEntityDataWithParams();
   }
+  onDropdownValueChange(param1, param2){
+    debugger;
+    console.log("Inside investigator view" , param1);
+  }
 
   onToggleComponent(p_strStatus){
     store.dispatch({type:"UPDATE_PROPERTY_PANEL_STATE"});
