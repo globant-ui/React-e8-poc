@@ -47,6 +47,8 @@
     "react-select": "^1.0.0-rc.2",
     "react-select-plus": "^1.0.0-rc.1.patch3",
     "redux": "^3.6.0",
+    "redux-logger": "^2.8.1",
+    "redux-promise-middleware": "^4.2.0",
     "stylus": "^0.54.5"
   }
 }

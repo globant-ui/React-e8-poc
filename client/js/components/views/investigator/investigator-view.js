@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {MainViewTpl, MainViewHeader} from 'js/components/base-views/main-view';
 import CustomTable from 'js/components/table-component/custom-table';
 import CustomType from 'js/components/table-component/custom-type';
@@ -7,29 +8,16 @@ import CustomExpandCollapse from 'js/components/expand-collapse-component/custom
 import CustomPanelHeader from 'js/components/expand-collapse-component/custom-panel-header';
 import Arrow from 'js/components/expand-collapse-component/toggle-arrow-component';
 import CustomTabComponent from 'js/components/tab-component/custom-tab-component';
-import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 import TopActionPanel from 'js/components/top-action-panel-component/topActionPanel'
-
+import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 import * as styles from '!style!css!stylus!./investigator-view.styl';
+import store from '../../../../store';
 
-export default class InvestigatorView extends TopActionPanel{  
+class InvestigatorView extends TopActionPanel{  
   constructor(){
     super(...arguments);
     this.state = {
-      "tableData" : {
-            "title":"Entity Results",
-            "columnDetail": [{"title":"Entities","isRequired":true,"customComponent":CustomEntity,"sortType":"custom_content","defaultSort":"asc","sortField":"entityTitle"},{"title":"Behavior","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Type","isRequired":true,"customComponent":CustomType},{"title":"Score","isRequired":true,"sortType":"date","defaultSort":"asc"}],
-            "tableContent": [
-                {"Entities":{"entityType":"system","entityTitle":"system@authority","displayMode":"2x"},"Behavior":"System Activity","Type":{},"Score":"10"},
-                {"Entities":{"entityType":"system","entityTitle":"system1@authority","displayMode":"2x"},"Behavior":"System Activity1","Type":{},"Score":"7"},
-                {"Entities":{"entityType":"user","entityTitle":"user@authority","displayMode":"2x"},"Behavior":"User Activity","Type":{},"Score":"9"},
-                {"Entities":{"entityType":"system","entityTitle":"mysystem@authority","displayMode":"2x"},"Behavior":"my system Activity","Type":{},"Score":"8.4"},
-                {"Entities":{"entityType":"user","entityTitle":"bankim@authority","displayMode":"2x"},"Behavior":"bankim Activity","Type":{},"Score":"6"},
-                {"Entities":{"entityType":"system","entityTitle":"autosystem@authority","displayMode":"2x"},"Behavior":"auto system Activity","Type":{},"Score":"7.8"},
-                {"Entities":{"entityType":"user","entityTitle":"globant@authority","displayMode":"2x"},"Behavior":"globant Activity","Type":{},"Score":"6.5"},
-                {"Entities":{"entityType":"user","entityTitle":"user2@authority","displayMode":"2x"},"Behavior":"User2 Activity","Type":{},"Score":"7.2"}
-            ]
-        },
+      
         "sliderData" : {
                 "minVal" : 0,
                 "maxVal" : 10,
@@ -49,37 +37,7 @@ export default class InvestigatorView extends TopActionPanel{
                 10: <strong>10</strong>,
                 }
             },
-      "expandPanelStatus": "close",  
-      "tabContainerStatus": "close",  
-      "graphContainerStatus": "close",
-	  "currentSelectionEntity": {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},  
-      "tabComponentData":{
-          "id": "behaviourTabComponent",
-          "defaultActiveKey": "first",
-          "tabArea": 12, //Value between 1 to 12 as Bootstrap devide screen in 12 column.
-          "tabHeader": [
-            {
-              "title": <CustomTabHeader iconData={"green"} title="Anomalous User Activity"/>,
-              "eventKey": "first",
-              "subHeaderContent": "NA"
-            },
-            {
-              "title": <CustomTabHeader iconData={"blue"} title="Privileged Access Anomally"/>,
-              "eventKey": "second",
-              "subHeaderContent": "NA"
-            },
-          ],
-          "tabContainer": [
-            {
-             "eventKey": "first",
-             "tabContent": "TabContent 1" 
-            },
-            {
-             "eventKey": "second",
-             "tabContent": "TabContent 2" 
-            }
-          ]
-      }
+        "currentSelectionEntity": {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},
     }
   }
 
@@ -92,15 +50,15 @@ export default class InvestigatorView extends TopActionPanel{
     }
 
   onToggleComponent(p_strStatus){
-    this.setState({"expandPanelStatus":p_strStatus});
+    store.dispatch({type:"UPDATE_PROPERTY_PANEL_STATE"});
   }
 
   onToggleTabComponent(p_strStatus){
-    this.setState({"tabContainerStatus":p_strStatus});
+    store.dispatch({type:"UPDATE_DETAIL_PANEL_STATE"});
   }
 
   onToggleGraphTabComponent(p_strStatus){
-    this.setState({"graphContainerStatus":p_strStatus});
+    store.dispatch({type:"UPDATE_GRAPH_PANEL_STATE"});
   }
 
   onTableDataSelectionChange(p_rowContent){
@@ -111,19 +69,20 @@ export default class InvestigatorView extends TopActionPanel{
 		})
   }
 
+
   render(){
-    const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.expandPanelStatus}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
+    const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.propertyPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
 
-    const customHeaderTab = <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.tabContainerStatus}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</p></div></CustomPanelHeader>;
+    const customHeaderTab = <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.detailPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</p></div></CustomPanelHeader>;
 
-    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.state.graphContainerStatus}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</p><span style={{paddingLeft:"10px"}} className='fa fa-sort-amount-asc fa-sm'/></div></CustomPanelHeader>;
+    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.graphPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</p><span style={{paddingLeft:"10px"}} className='fa fa-sort-amount-asc fa-sm'/></div></CustomPanelHeader>;
 
     return (
 		<MainViewTpl>
       {super.renderHeader()}
 			<div id={'bottom-container'}>
 				<div id={'bottom-left-container'}>
-					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} tableData={this.state.tableData}/>
+					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} tableData={this.props.entity}/>
 				</div>
 				<div id={'bottom-right-container'}>
 					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
@@ -138,7 +97,7 @@ export default class InvestigatorView extends TopActionPanel{
 						</div>
 					</CustomExpandCollapse>
 					<CustomExpandCollapse id="behaviourContainer"  header={customHeaderTab}>
-						<CustomTabComponent data={this.state.tabComponentData}/>
+						<CustomTabComponent data={this.props.behaviorDetail}/>
 					</CustomExpandCollapse>
 				</div>
 			</div>
@@ -146,3 +105,15 @@ export default class InvestigatorView extends TopActionPanel{
     );
   }
 }
+
+function select(store){
+   return{
+    entity: store.entity,
+    behaviorDetail: store.entityDetail.behaviorDetail,
+    graphPanelState: store.panelState.graphPanelState,
+    propertyPanelState: store.panelState.propertyPanelState,
+    detailPanelState: store.panelState.detailPanelState
+  };
+}
+
+export default connect(select)(InvestigatorView);
