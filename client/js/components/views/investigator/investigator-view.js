@@ -12,7 +12,7 @@ import TopActionPanel from 'js/components/top-action-panel-component/topActionPa
 import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 import * as styles from '!style!css!stylus!./investigator-view.styl';
 import store from '../../../../store';
-import {fetchEntityData} from '../../../../actions/entity-actions';
+import {fetchEntityData, fetchEntityDataWithParams} from '../../../../actions/entity-actions';
 class InvestigatorView extends TopActionPanel{  
   constructor(){
     super(...arguments);
@@ -49,7 +49,7 @@ class InvestigatorView extends TopActionPanel{
         console.log("@@@@@@@@@Slider Value:"+p_currentValue);
     }
     onSelectChange(param1,param2){
-        console.log(param1);
+        fetchEntityDataWithParams(param1);
     }
 
   onToggleComponent(p_strStatus){
