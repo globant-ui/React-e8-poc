@@ -19,7 +19,7 @@ class TopActionPanel extends React.Component{
                         </div>
                         <div id={'top-left-bottom-container'}>
                             <div id={'top-left-bottom-left-container'}>
-                                <CustomDateRange/>
+                                <CustomDateRange onChange={(param)=>this.handleDateRangeChange(param)}/>
                             </div>
                             <div id={'top-left-bottom-right-container'}>
                                 <p><b>Behaviors</b></p><p>All Behaviors</p>

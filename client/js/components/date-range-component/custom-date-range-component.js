@@ -12,14 +12,14 @@ class CustomDateRange extends React.Component{
         }
     }
 
-    handleChange(which, payload) {
-    console.log("which:"+which);
-    console.log("payload:"+payload);
-    console.log(payload);
+handleChange(which, payload) {
+    if(this.props.onChange){
+        this.props.onChange(payload);
+    }
     this.setState({
       'predefined' : payload
     });
-  }
+}
     onDateIconClick(){
         if(document.getElementById('customDateRangeContainer').classList.contains('active-date')){
             document.getElementById('customDateRangeContainer').classList.remove('active-date');

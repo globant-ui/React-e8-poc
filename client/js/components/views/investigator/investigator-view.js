@@ -47,12 +47,16 @@ class InvestigatorView extends TopActionPanel{
           "sliderData": objSlider
       });
       console.log("@@@@@@@@@Slider Value:"+p_currentValue);
-      store.dispatch({type:"UPDATE_FILTER_SCORE",payload:p_currentValue});
       //fetchEntityDataWithParams();
   }
+
+  handleDateRangeChange(param){
+    console.log(param);
+    //fetchEntityDataWithParams();
+  }
+
   onSelectChange(param1,param2){
-      store.dispatch({type:"UPDATE_FILTER_LIST",payload:param1});
-      debugger;
+    console.log(param1);
       //fetchEntityDataWithParams();
   }
 
