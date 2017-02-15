@@ -12,11 +12,11 @@ class CustomTable extends React.Component{
     }
 
     validateData(){
-        for(let i = 0 ; i < this.props.tableData.columnDetail.length; i++) {
-            if(this.props.tableData.columnDetail[i].isRequired === true){
-                for(let j = 0; j < this.props.tableData.tableContent.length; j++){
-                    if(!this.props.tableData.tableContent[j][this.props.tableData.columnDetail[i].title]){
-                        this.props.tableData.tableContent[j][this.props.tableData.columnDetail[i].title] = "NA";
+        for(let i = 0 ; i < this.props.tableDefination.columnDetail.length; i++) {
+            if(this.props.tableDefination.columnDetail[i].isRequired === true){
+                for(let j = 0; j < this.props.tableData.length; j++){
+                    if(!this.props.tableData[j][this.props.tableDefination.columnDetail[i].title]){
+                        this.props.tableData[j][this.props.tableDefination.columnDetail[i].title] = "NA";
                     }
                 }
             }
@@ -25,7 +25,7 @@ class CustomTable extends React.Component{
     }
 
     sortTableListByDate(p_columnValue,p_sortType,p_isCustomField){ 
-			const arrUpdatedList = this.props.tableData.tableContent.sort(function(a, b){
+			const arrUpdatedList = this.props.tableData.sort(function(a, b){
                 var dateA,dateB;
                 if(!p_isCustomField){
                     dateA = new Date(a[p_columnValue]);
@@ -42,11 +42,13 @@ class CustomTable extends React.Component{
                     return dateB-dateA //sort by date ascending
                 }
 			});
-            store.dispatch({type:"UPDATE_ENTITY_LIST_SEQUENCE",payload:arrUpdatedList});
+            if(this.props.sortTableData){
+                this.props.sortTableData(arrUpdatedList);
+            }
 		}
 
     sortTableByName(p_columnValue,p_sortType,p_isCustomField){ 
-			const arrUpdatedList = this.props.tableData.tableContent.sort(function(a, b){
+			const arrUpdatedList = this.props.tableData.sort(function(a, b){
                 var nameA,nameB;
                 if(!p_isCustomField){
                     nameA = a[p_columnValue].toLowerCase();
@@ -72,7 +74,9 @@ class CustomTable extends React.Component{
                
                 return 0 //default return value (no sorting)
             });
-            store.dispatch({type:"UPDATE_ENTITY_LIST_SEQUENCE",payload:arrUpdatedList});
+            if(this.props.sortTableData){
+                this.props.sortTableData(arrUpdatedList);
+            }
 		}
     
     handleSorting(p_sortType,p_columnId){
@@ -92,22 +96,22 @@ class CustomTable extends React.Component{
 
 
      getCustomSortField(p_columnId){
-         for(let i = 0 ; i < this.props.tableData.columnDetail.length; i++) {
-             if(this.props.tableData.columnDetail[i].title === p_columnId){
-                 return this.props.tableData.columnDetail[i].sortField;
+         for(let i = 0 ; i < this.props.tableDefination.columnDetail.length; i++) {
+             if(this.props.tableDefination.columnDetail[i].title === p_columnId){
+                 return this.props.tableDefination.columnDetail[i].sortField;
              }
          }
      }
 
      getDefaultSort(p_columnId){
-         for(let i = 0 ; i < this.props.tableData.columnDetail.length; i++) {
-             if(this.props.tableData.columnDetail[i].title === p_columnId){
-                 if(this.props.tableData.columnDetail[i].defaultSort === 'asc'){
-                     this.props.tableData.columnDetail[i].defaultSort = "desc";
+         for(let i = 0 ; i < this.props.tableDefination.columnDetail.length; i++) {
+             if(this.props.tableDefination.columnDetail[i].title === p_columnId){
+                 if(this.props.tableDefination.columnDetail[i].defaultSort === 'asc'){
+                     this.props.tableDefination.columnDetail[i].defaultSort = "desc";
                      return "asc";
                  }
                  else{
-                     this.props.tableData.columnDetail[i].defaultSort = "asc";
+                     this.props.tableDefination.columnDetail[i].defaultSort = "asc";
                      return "desc";
                  }
              }
@@ -116,9 +120,9 @@ class CustomTable extends React.Component{
 
     createCustomColumnList(){
         const result = [];
-        for(let i = 0 ; i < this.props.tableData.columnDetail.length; i++) {
-             if(this.props.tableData.columnDetail[i].isRequired === true){
-                 result.push(this.props.tableData.columnDetail[i]);
+        for(let i = 0 ; i < this.props.tableDefination.columnDetail.length; i++) {
+             if(this.props.tableDefination.columnDetail[i].isRequired === true){
+                 result.push(this.props.tableDefination.columnDetail[i]);
              }
         }
         const mappedColumn = result.map((columnData,i) => <CustomColumn key={i} clickHandler = {(sortType,columnId) => this.handleSorting(sortType,columnId)} title = {columnData.title} columnData={columnData}/>);
@@ -127,7 +131,7 @@ class CustomTable extends React.Component{
 
    rowClickHandler(p_objRowContent, currentRowId){
        if(!document.getElementById(currentRowId).classList.contains("active-row")){
-            store.dispatch({type:"UPDATE_CURRENT_ROW",payload:currentRowId});
+            store.dispatch({type:'UPDATE_CURRENT_ROW_ID',currentRowID:currentRowId});
             if(this.props.tableDataSelectHandler){
                 this.props.tableDataSelectHandler(p_objRowContent);
             }
@@ -137,19 +141,19 @@ class CustomTable extends React.Component{
 
    render(){
 
-        if(this.props.tableData){
+        if(this.props.tableData && this.props.tableDefination){
             if(this.validateData() === false){
                 return(<h2 className='data-warning'>Invalid Table Data Received!!</h2>);
             }
-            else if(this.props.tableData.tableContent.length <= 0){
+            else if(this.props.tableData.length <= 0){
                 return <span>Loading...</span>
             }
             else {
-                const mappedRows = this.props.tableData.tableContent.map((rowData,i)=> <CustomRow currentRow={this.props.tableData.currentRowID} onClick={(data,currentRowId) => this.rowClickHandler(data,currentRowId)} id={"row_"+rowData.Entities.entityType+"_"+rowData.Entities.entityTitle} key={i} rowContent={rowData} columnDetail={this.props.tableData.columnDetail}/>);
+                const mappedRows = this.props.tableData.map((rowData,i)=> <CustomRow currentRow={this.props.currentRowID} onClick={(data,currentRowId) => this.rowClickHandler(data,currentRowId)} id={"row_"+rowData.Entities.entityType+"_"+rowData.Entities.entityTitle} key={i} rowContent={rowData} columnDetail={this.props.tableDefination.columnDetail}/>);
                 return(
                     <div className='custom-table'>
                         <div id='customTableHeader'>
-                            <h2>{this.props.tableData.title}</h2>
+                            <h2>{this.props.tableDefination.title}</h2>
                         </div>
                         <div id='customTableContainer'>
                             <table>
