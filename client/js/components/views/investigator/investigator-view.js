@@ -13,6 +13,7 @@ import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 import * as styles from '!style!css!stylus!./investigator-view.styl';
 import store from '../../../../store';
 import {fetchEntityData, fetchEntityDataWithParams} from '../../../../actions/entity-actions';
+
 class InvestigatorView extends TopActionPanel{  
   constructor(){
     super(...arguments);
@@ -37,8 +38,16 @@ class InvestigatorView extends TopActionPanel{
                 10: <strong>10</strong>,
                 }
             },
+            "tableDefination": {
+            title:"Entity Results",
+            currentRowID: "row_0",
+            columnDetail: [{"title":"Entities","isRequired":true,"customComponent":CustomEntity,"sortType":"custom_content","defaultSort":"asc","sortField":"entityTitle"},{"title":"Behavior","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Type","isRequired":true,"customComponent":CustomType},{"title":"Score","isRequired":true,"sortType":"date","defaultSort":"asc"}],
+        },
+        "entityList": [],
         "currentSelectionEntity": {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},
     }
+    this.updateTableContent = this.updateTableContent.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
   }
 
   handleSliderChange(p_currentValue){
@@ -84,11 +93,33 @@ class InvestigatorView extends TopActionPanel{
 		})
   }
 
-  componentWillMount(){
-    fetchEntityData();
+  sortTableData(p_content){
+    this.setState({"entityList":p_content});
   }
 
+  componentWillMount(){
+    fetchEntityData(this.updateTableContent)
+  }
 
+  updateTableContent(p_payload){
+      var tableArr = [];
+      var currentRowID = "";
+      for(let i = 0; i < p_payload.data.length ; i++){
+          for(let j=0; j < p_payload.data[i].options.length; j++){
+              tableArr.push(p_payload.data[i].options[j]);
+              if(i == 0 && j == 0){
+                  currentRowID = "row_"+p_payload.data[i].options[j].Entities.entityType + "_" + p_payload.data[i].options[j].Entities.entityTitle;
+              }
+          }
+      }
+      store.dispatch({type:'UPDATE_CURRENT_ROW_ID',currentRowID:currentRowID});
+      this.setState({"entityList":tableArr});
+  }
+
+  componentWillReceiveProps(){
+       this.render();
+   }
+   
   render(){
     const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.propertyPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
 
@@ -101,7 +132,7 @@ class InvestigatorView extends TopActionPanel{
       {super.renderHeader()}
 			<div id={'bottom-container'}>
 				<div id={'bottom-left-container'}>
-					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} tableData={this.props.entity}/>
+					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} sortTableData={(p_tableContent)=>this.sortTableData(p_tableContent)} tableData={this.state.entityList} currentRowID={this.props.entity.currentRowID} tableDefination={this.state.tableDefination}/>
 				</div>
 				<div id={'bottom-right-container'}>
 					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
