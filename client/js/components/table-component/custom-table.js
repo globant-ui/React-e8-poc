@@ -143,10 +143,11 @@ class CustomTable extends React.Component{
 
         if(this.props.tableData && this.props.tableDefination){
             if(this.validateData() === false){
-                return(<h2 className='data-warning'>Invalid Table Data Received!!</h2>);
+                return(<h2 className='data-warning'><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Invalid Table Data Received!!</h2>);
             }
             else if(this.props.tableData.length <= 0){
-                return <span>Loading...</span>
+                return <div style={{textAlign:'center'}}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+<span className="sr-only">Loading...</span></div>
             }
             else {
                 const mappedRows = this.props.tableData.map((rowData,i)=> <CustomRow currentRow={this.props.currentRowID} onClick={(data,currentRowId) => this.rowClickHandler(data,currentRowId)} id={"row_"+rowData.Entities.entityType+"_"+rowData.Entities.entityTitle} key={i} rowContent={rowData} columnDetail={this.props.tableDefination.columnDetail}/>);

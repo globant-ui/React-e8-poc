@@ -18,8 +18,7 @@ class InvestigatorView extends TopActionPanel{
   constructor(){
     super(...arguments);
     this.state = {
-      
-        "sliderData" : {
+        sliderData : {
                 "minVal" : 0,
                 "maxVal" : 10,
                 "stepVal" : 1,
@@ -38,13 +37,13 @@ class InvestigatorView extends TopActionPanel{
                 10: <strong>10</strong>,
                 }
             },
-            "tableDefination": {
+          tableDefination : {
             title:"Entity Results",
             currentRowID: "row_0",
             columnDetail: [{"title":"Entities","isRequired":true,"customComponent":CustomEntity,"sortType":"custom_content","defaultSort":"asc","sortField":"entityTitle"},{"title":"Behavior","isRequired":true,"sortType":"content","defaultSort":"asc"},{"title":"Type","isRequired":true,"customComponent":CustomType},{"title":"Score","isRequired":true,"sortType":"date","defaultSort":"asc"}],
         },
-        "entityList": [],
-        "currentSelectionEntity": {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},
+        entityList: [],
+        currentSelectionEntity: {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},
     }
     this.updateTableContent = this.updateTableContent.bind(this);
     this.componentWillMount = this.componentWillMount.bind(this);
@@ -68,8 +67,8 @@ class InvestigatorView extends TopActionPanel{
     console.log(param1);
       //fetchEntityDataWithParams();
   }
+
   onDropdownValueChange(param1, param2){
-    debugger;
     console.log("Inside investigator view" , param1);
   }
 
@@ -86,7 +85,6 @@ class InvestigatorView extends TopActionPanel{
   }
 
   onTableDataSelectionChange(p_rowContent){
-		console.log(p_rowContent);
 		var currentObj = Object.assign({},p_rowContent.Entities,{"displayMode":"4x"})
 		this.setState({
 			"currentSelectionEntity": currentObj
@@ -119,13 +117,29 @@ class InvestigatorView extends TopActionPanel{
   componentWillReceiveProps(){
        this.render();
    }
+
+   createPanelHeader(p_strId){
+     switch(p_strId){
+       case "propertyContainer":
+        return <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.propertyPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
+       break;
+
+       case "behaviourContainer": 
+        return <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.detailPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</p></div></CustomPanelHeader>;
+       break;
+
+       case "graphContainer":
+        return <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.graphPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</p><span style={{paddingLeft:"10px"}} className='fa fa-sort-amount-asc fa-sm'/></div></CustomPanelHeader>;
+       break;
+     }
+   }
    
   render(){
-    const customHeader = <CustomPanelHeader componentId='propertyContainer' onClick={(status) => this.onToggleComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.propertyPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Properties</p></div></CustomPanelHeader>;
+    const customHeader = this.createPanelHeader('propertyContainer');
 
-    const customHeaderTab = <CustomPanelHeader componentId='behaviourContainer'  onClick={(status) => this.onToggleTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.detailPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Details</p></div></CustomPanelHeader>;
+    const customHeaderTab = this.createPanelHeader('behaviourContainer');
 
-    const customGraphHeader = <CustomPanelHeader componentId='graphContainer'  onClick={(status) => this.onToggleGraphTabComponent(status)}><div style={{"display":"table"}}><Arrow arrowStatus={this.props.graphPanelState}/><p style={{"display":"table-cell","verticalAlign": "middle"}}>Entity Behavior Graph</p><span style={{paddingLeft:"10px"}} className='fa fa-sort-amount-asc fa-sm'/></div></CustomPanelHeader>;
+    const customGraphHeader = this.createPanelHeader('graphContainer');
 
     return (
 		<MainViewTpl>
