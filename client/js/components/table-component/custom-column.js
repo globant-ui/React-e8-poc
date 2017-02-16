@@ -12,7 +12,7 @@ class CustomColumn extends React.Component{
     
     render(){
         const isRequired = this.props.columnData.sortType !== undefined;
-        return(<th className = {isRequired? 'allowClick' : 'blockClick'} onClick={isRequired? this.handleClick : ''}> {this.props.title} </th>);
+        return(<th className = {isRequired? 'allowClick flex-item' : 'blockClick flex-item'} onClick={isRequired? this.handleClick : ''}> {this.props.title} </th>);
      }
 }
 

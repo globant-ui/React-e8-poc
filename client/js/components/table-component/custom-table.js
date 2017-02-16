@@ -157,9 +157,9 @@ class CustomTable extends React.Component{
                             <h2>{this.props.tableDefination.title}</h2>
                         </div>
                         <div id='customTableContainer'>
-                            <table>
-                                <tbody>
-                                    <tr>{this.createCustomColumnList()}</tr>
+                            <table style={{width:"100%"}}>
+                                <tbody style={{width:"100%"}}>
+                                    <tr className={'flex-container'}>{this.createCustomColumnList()}</tr>
                                     {mappedRows}
                                 </tbody>
                             </table>

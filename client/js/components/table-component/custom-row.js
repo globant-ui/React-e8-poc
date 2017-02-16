@@ -19,7 +19,7 @@ class CustomRow extends React.Component{
                    
             }
         }
-        const mappedRowItems = result.map((cellContent,index) => cellContent.component !== "NA" ? <td key={index}><cellContent.component data={cellContent.title}/></td> : <td key={index}>{cellContent.title}</td>);
+        const mappedRowItems = result.map((cellContent,index) => cellContent.component !== "NA" ? <td className={'flex-item'} key={index}><cellContent.component data={cellContent.title}/></td> : <td className={'flex-item'} key={index}>{cellContent.title}</td>);
         return mappedRowItems;
     }
 
@@ -31,7 +31,7 @@ class CustomRow extends React.Component{
 
     render(){
         return(
-            <tr className={this.props.currentRow === this.props.id ? 'active-row' : '' } id={this.props.id} style={{cursor:'pointer'}} onClick={this.onRowClickHandler}>{this.createRowItem()}</tr>
+            <tr className={this.props.currentRow === this.props.id ? 'active-row flex-container' : 'flex-container' } id={this.props.id} style={{cursor:'pointer'}} onClick={this.onRowClickHandler}>{this.createRowItem()}</tr>
         );
     }
 }
