@@ -8,9 +8,10 @@ export function fetchEntityData(p_callback){
       console.log(error);
     });
 }
-export function fetchEntityDataWithParams(obj){
-    store.dispatch({
-        type: "FETCH_ENTITY_DATA",
-        payload: axios.get("https://api.myjson.com/bins/xc7yp?scoreStartLimit="+obj.scoreStartLimit+"&scoreEndLimit="+obj.scoreEndLimit+"&selectParams="+obj.selectParams)
+export function fetchEntityDataWithParams(p_callback,obj){
+    axios.get('https://api.myjson.com/bins/xc7yp?riskStartLimit='+obj.sliderCurrentValue[0]+'&riskEndLimit='+obj.sliderCurrentValue[1]+'&filterList='+obj.filterList+'&behavior='+obj.behavior+'&startDate='+obj.startDate+'&endDate='+obj.endDate)
+    .then(p_callback)
+    .catch(function (error) {
+      console.log(error);
     });
 }

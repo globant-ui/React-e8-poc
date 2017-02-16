@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 
 var options = [
+    { value: 'All', label: 'All' },
 	{ value: 'System Activity', label: 'System Activity' },
 	{ value: 'System Activity1', label: 'System Activity1' },
 	{ value: 'User Activity', label: 'User Activity' },
@@ -12,18 +13,26 @@ var options = [
      constructor(props) {
     super(props);
     this.state = {
-       value: '',
+       value: 'All',
        multiSelectVal: false
     };
 }
 
 render() {
     var dropdownValChange = (val, selected) => {
-        this.props.onChange(val.value, selected);
+        if(this.props.onChange){
+            if(val){
+                this.props.onChange(val.value, selected);
+            }
+            else{
+                this.props.onChange('', '');
+            }
+        }
+        
         this.setState({
-          value: val,
-          multiSelectVal: false
-       });
+            value: val,
+            multiSelectVal: false
+        });
     }
         return (
                 <div>

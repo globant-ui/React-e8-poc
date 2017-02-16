@@ -22,7 +22,6 @@ class InvestigatorView extends TopActionPanel{
                 "minVal" : 0,
                 "maxVal" : 10,
                 "stepVal" : 1,
-                "currentVal" : [0,1],
                 "marks": {
                 0: <strong>0</strong>,
                 1: <strong>1</strong>,
@@ -44,32 +43,37 @@ class InvestigatorView extends TopActionPanel{
         },
         entityList: [],
         currentSelectionEntity: {"entityType":"system","entityTitle":"system@authority","displayMode":"4x"},
+        isTopLevelUpdated: false
     }
     this.updateTableContent = this.updateTableContent.bind(this);
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.checkNewTableData = this.checkNewTableData.bind(this);
   }
 
   handleSliderChange(p_currentValue){
-      const objSlider = Object.assign({},this.state.sliderData,{currentVal:p_currentValue})
-      this.setState({
-          "sliderData": objSlider
-      });
-      console.log("@@@@@@@@@Slider Value:"+p_currentValue);
-      //fetchEntityDataWithParams();
+    this.setState({isTopLevelUpdated:true});
+    store.dispatch({type:'UPDATE_SLIDER_CURRENT_VALUE',currentValue:p_currentValue});
   }
 
   handleDateRangeChange(param){
     console.log(param);
-    //fetchEntityDataWithParams();
+    var endDate = new Date(param.endDate._d);
+    var strEndDate = endDate.getDate()+"-"+(endDate.getMonth()+1)+"-"+endDate.getFullYear();
+    var startDate = new Date(param.startDate._d);
+    var strStartDate = startDate.getDate()+"-"+(startDate.getMonth()+1)+"-"+startDate.getFullYear();
+    this.setState({isTopLevelUpdated:true});
+    store.dispatch({type:'UPDATE_DATE_RANGE',date:{startDate:strStartDate,endDate:strEndDate}});
   }
 
   onSelectChange(param1,param2){
-    console.log(param1);
-      //fetchEntityDataWithParams();
+      console.log(param1);
+      this.setState({isTopLevelUpdated:true});
+      store.dispatch({type:'UPDATE_FILTER_LIST',filterList:param1});
   }
 
   onDropdownValueChange(param1, param2){
-    console.log("Inside investigator view" , param1);
+    this.setState({isTopLevelUpdated:true});
+    store.dispatch({type:'UPDATE_BEHAVIOR',behavior:param1});
   }
 
   onToggleComponent(p_strStatus){
@@ -114,8 +118,15 @@ class InvestigatorView extends TopActionPanel{
       this.setState({"entityList":tableArr});
   }
 
+  checkNewTableData(){
+       if(this.state.isTopLevelUpdated === true){
+         this.setState({isTopLevelUpdated:false});
+         fetchEntityDataWithParams(this.updateTableContent,this.props.entity);
+       }
+  }
+
   componentWillReceiveProps(){
-       this.render();
+        setTimeout(this.checkNewTableData,100);
    }
 
    createPanelHeader(p_strId){
@@ -144,6 +155,7 @@ class InvestigatorView extends TopActionPanel{
     return (
 		<MainViewTpl>
       {super.renderHeader()}
+      
 			<div id={'bottom-container'}>
 				<div id={'bottom-left-container'}>
 					<CustomTable tableDataSelectHandler={(p_rowContent)=>this.onTableDataSelectionChange(p_rowContent)} sortTableData={(p_tableContent)=>this.sortTableData(p_tableContent)} tableData={this.state.entityList} currentRowID={this.props.entity.currentRowID} tableDefination={this.state.tableDefination}/>

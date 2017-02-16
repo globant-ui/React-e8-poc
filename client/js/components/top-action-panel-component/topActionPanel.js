@@ -30,7 +30,7 @@ class TopActionPanel extends React.Component{
                     </div>
                     <div id={'top-right-container'}>
                         <p><b>Risk Score</b></p>
-                        <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.state.sliderData.currentVal} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
+                        <CustomSlider minVal={this.state.sliderData.minVal} maxVal={this.state.sliderData.maxVal} stepVal={this.state.sliderData.stepVal}  currentVal={this.props.entity.sliderCurrentValue} marks={this.state.sliderData.marks} onChange={(currVal) => this.handleSliderChange(currVal)}/>
                     </div>
                 </div>
             );
