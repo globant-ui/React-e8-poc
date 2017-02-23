@@ -13,6 +13,7 @@ import CustomTabHeader from 'js/components/tab-component/custom-tab-header';
 import * as styles from '!style!css!stylus!./investigator-view.styl';
 import store from '../../../../store';
 import {fetchEntityData, fetchEntityDataWithParams} from '../../../../actions/entity-actions';
+import TimeGraph from 'js/components/graph-component/custom-graph';
 
 class InvestigatorView extends TopActionPanel{  
   constructor(){
@@ -172,8 +173,8 @@ class InvestigatorView extends TopActionPanel{
 				</div>
 				<div id={'bottom-right-container'}>
 					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
-						<div className='right-container'>
-							<i>Graph is WIP</i>
+						<div id='canvasContainer' className='right-container'>
+							<TimeGraph {...this.props} parentId='canvasContainer' data={this.state.graphData}/>
 						</div>
 					</CustomExpandCollapse>
 					<CustomEntity data={this.state.currentSelectionEntity}/>

@@ -5,6 +5,7 @@ import DropdownGroupView from 'js/components/multiselect/drop-down-group';
 import LocalDropdownView from 'js/components/multiselect/local-dropdown';
 import * as styles from '!style!css!stylus!./topActionPanel.styl';
 
+
 class TopActionPanel extends React.Component{
     constructor(){
         super();
