@@ -1,11 +1,11 @@
-import React        from 'react';
+import React from 'react';
 import {scaleLinear,scaleTime} from 'd3-scale';
 import * as d3 from "d3";
 import Chart from './Chart';
 import XYAxis from './x-y-axis';
+import * as styles from '!style!css!stylus!./graph.styl';
 
 class TimeGraph extends React.Component{
-
     constructor(){
         super();
         this.state = {
@@ -25,15 +25,29 @@ class TimeGraph extends React.Component{
                     .range([this.state.height - this.state.margin.top - this.state.margin.bottom, 0]); 
         var colorScale = scaleLinear()
                                 .domain([0,d3.max(this.props.data, function(d) { return d.total; })])
-                                .range(['red','green']);                   
+                                .range(['red','green']);
+
          const circleProps = {
             cx: (x(new Date(d.date))),
             cy: (this.state.height - this.state.margin.top - this.state.margin.bottom - (this.state.height - this.state.margin.top - this.state.margin.bottom - y(d.total))),
             r: 5,
             fill: colorScale((this.state.height - this.state.margin.top - this.state.margin.bottom - (this.state.height - this.state.margin.top - this.state.margin.bottom - y(d.total)))),
             key: i
+            
         };
-        return <circle {...circleProps} />;
+        return <circle data-date={d.date} data-content={d.total} style={{cursor:'pointer'}} onMouseOver={(e)=>this.onCircleMouseOver(e)} onMouseOut={(e)=>this.onCircleMouseOut(e)} {...circleProps} />;
+    }
+
+    onCircleMouseOver(e){
+        document.getElementById('toolTip').style.top = (e.clientY - 60)+"px";
+        document.getElementById('toolTip').style.left = (e.clientX + 10)+"px";
+        document.getElementById('toolTip').style.display = "block";
+        var strContent = "<strong>Date: </strong>"+e.target.attributes['data-date'].textContent+"<br/><strong>Total: </strong>"+e.target.attributes['data-content'].textContent;
+         document.getElementById('toolTip').innerHTML = strContent;
+    }
+
+    onCircleMouseOut(e){
+        document.getElementById('toolTip').style.display = "none";
     }
 
     DataCircles(){
@@ -73,11 +87,16 @@ class TimeGraph extends React.Component{
                 .rangeRound([0, this.state.width - this.state.margin.left - this.state.margin.right]);
         var yScale = scaleLinear()
                     .domain([0, d3.max(this.props.data, function(d) { return d.total; })])
-                    .range([this.state.height - this.state.margin.top - this.state.margin.bottom, 0]);         
-        return <Chart width = {this.state.width} height={this.state.height} margin={this.state.margin}>
-                    {this.DataCircles()}
-                    <XYAxis width = {this.state.width} height={this.state.height} margin={this.state.margin} xScale={xScale} yScale={yScale} />
-                </Chart>;
+                    .range([this.state.height - this.state.margin.top - this.state.margin.bottom, 0]);
+
+        return <div id={'chartContainer'}>
+                    <Chart width = {this.state.width} height={this.state.height} margin={this.state.margin}>
+                        {this.DataCircles()}
+                        <XYAxis width = {this.state.width} height={this.state.height} margin={this.state.margin} xScale={xScale} yScale={yScale} />
+                        <div className={'d3-tip'}></div>
+                    </Chart>
+                    <div id={'toolTip'} style={{position:'absolute',display:'none'}} className={'d3-tip'}>Hello</div>
+                </div>;
     }
 
 }
