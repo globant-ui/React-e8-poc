@@ -20,14 +20,14 @@ class InvestigatorView extends TopActionPanel{
     super(...arguments);
     this.state = {
         graphData: [
-                {"date":"2012-02-19","total":10},           
-                {"date":"2012-02-23","total":9},
-                {"date":"2012-03-8","total":7},
-                {"date":"2012-03-15","total":5},
-                {"date":"2012-03-21","total":4},
-                {"date":"2012-04-15","total":10},
-                {"date":"2012-04-23","total":3},
-                {"date":"2012-04-12","total":1},
+                {"date":"2016-02-19","total":8},           
+                {"date":"2016-02-23","total":9},
+                {"date":"2016-03-8","total":7},
+                {"date":"2016-03-15","total":5},
+                {"date":"2016-03-21","total":4},
+                {"date":"2016-04-15","total":10},
+                {"date":"2016-04-23","total":3},
+                {"date":"2016-04-12","total":1},
             ],
         sliderData : {
                 "minVal" : 0,
@@ -174,7 +174,7 @@ class InvestigatorView extends TopActionPanel{
 				<div id={'bottom-right-container'}>
 					<CustomExpandCollapse id="graphContainer"  header={customGraphHeader}>
 						<div id='canvasContainer' className='right-container'>
-							<TimeGraph {...this.props} parentId='canvasContainer' data={this.state.graphData}/>
+							<TimeGraph data={this.state.graphData}/>
 						</div>
 					</CustomExpandCollapse>
 					<CustomEntity data={this.state.currentSelectionEntity}/>

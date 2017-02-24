@@ -16,8 +16,9 @@ class TimeGraph extends React.Component{
     }
 
     renderCircles(d,i){
+        var objDateRange = this.getDateRange();
         var x = scaleTime()
-                .domain([new Date("2012-02-15"), d3.timeDay.offset(new Date("2012-04-29"), 1)])
+                .domain([d3.timeDay.offset(new Date(objDateRange.startDate), -5), d3.timeDay.offset(new Date(objDateRange.endDate), 5)])
                 .rangeRound([0, this.state.width - this.state.margin.left - this.state.margin.right]);
         var y = scaleLinear()
                     .domain([0, d3.max(this.props.data, function(d) { return d.total; })])
@@ -43,10 +44,32 @@ class TimeGraph extends React.Component{
         return <g className="axis" ref="axis" transform={`translate(0, ${(this.state.height - this.state.margin.top - this.state.margin.bottom)})`}></g>
     }
 
+    sortArrayByDate(p_sortType = 'asc'){ 
+			const arrUpdatedList = this.props.data.sort(function(a, b){
+                var dateA,dateB;
+                dateA = new Date(a['date']);
+                dateB = new Date(b['date']);
+                 if(p_sortType === "asc"){
+                     return dateA-dateB //sort by date ascending
+                }
+				else {
+                    return dateB-dateA //sort by date ascending
+                }
+			});
+            return arrUpdatedList;
+    }
+
+    getDateRange(){
+        var arrSortList = this.sortArrayByDate();
+        var objDateRange = {startDate:arrSortList[0].date,endDate: arrSortList[arrSortList.length-1].date};
+        return objDateRange;
+    }
+
     render(){
         console.log(d3);
+        var objDateRange = this.getDateRange();
         var xScale = scaleTime()
-                .domain([new Date("2012-02-15"), d3.timeDay.offset(new Date("2012-04-29"), 1)])
+                .domain([d3.timeDay.offset(new Date(objDateRange.startDate), -5), d3.timeDay.offset(new Date(objDateRange.endDate), 5)])
                 .rangeRound([0, this.state.width - this.state.margin.left - this.state.margin.right]);
         var yScale = scaleLinear()
                     .domain([0, d3.max(this.props.data, function(d) { return d.total; })])
