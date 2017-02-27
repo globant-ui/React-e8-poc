@@ -41,7 +41,7 @@ class TimeGraph extends React.Component{
     onCircleMouseOver(e){
         debugger;
         document.getElementById('toolTip').style.top = (parseInt(e.target.attributes['cy'].textContent)-30)+"px";
-        document.getElementById('toolTip').style.left = (parseInt(e.target.attributes['cx'].textContent)-30)+"px";
+        document.getElementById('toolTip').style.left = (parseInt(e.target.attributes['cx'].textContent)-35)+"px";
         document.getElementById('toolTip').style.display = "block";
         var strContent = "<strong>Date: </strong>"+e.target.attributes['data-date'].textContent+"<br/><strong>Total: </strong>"+e.target.attributes['data-content'].textContent;
          document.getElementById('toolTip').innerHTML = strContent;
