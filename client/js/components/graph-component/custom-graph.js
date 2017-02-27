@@ -39,8 +39,9 @@ class TimeGraph extends React.Component{
     }
 
     onCircleMouseOver(e){
-        document.getElementById('toolTip').style.top = (e.clientY - 60)+"px";
-        document.getElementById('toolTip').style.left = (e.clientX + 10)+"px";
+        debugger;
+        document.getElementById('toolTip').style.top = (parseInt(e.target.attributes['cy'].textContent)-30)+"px";
+        document.getElementById('toolTip').style.left = (parseInt(e.target.attributes['cx'].textContent)-30)+"px";
         document.getElementById('toolTip').style.display = "block";
         var strContent = "<strong>Date: </strong>"+e.target.attributes['data-date'].textContent+"<br/><strong>Total: </strong>"+e.target.attributes['data-content'].textContent;
          document.getElementById('toolTip').innerHTML = strContent;
@@ -89,7 +90,7 @@ class TimeGraph extends React.Component{
                     .domain([0, d3.max(this.props.data, function(d) { return d.total; })])
                     .range([this.state.height - this.state.margin.top - this.state.margin.bottom, 0]);
 
-        return <div id={'chartContainer'}>
+        return <div id={'chartContainer'} style={{position:'relative'}}>
                     <Chart width = {this.state.width} height={this.state.height} margin={this.state.margin}>
                         {this.DataCircles()}
                         <XYAxis width = {this.state.width} height={this.state.height} margin={this.state.margin} xScale={xScale} yScale={yScale} />
